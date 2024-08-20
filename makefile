@@ -3,10 +3,10 @@ PROJECT_NAME := $(shell grep '^name' Cargo.toml | sed -e 's/.*= "\(.*\)"/\1/')
 # Distination install dir
 INSTALL_DIR := /usr/local/bin
 
-# ビルドされたバイナリのパス
+# Built binary path
 BINARY_PATH := target/release/$(PROJECT_NAME)
 
-# バイナリの名前
+# Binary name
 BINARY_NAME := "ulid"
 
 .PHONY: all build install uninstall clean
