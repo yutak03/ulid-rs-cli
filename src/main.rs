@@ -26,6 +26,7 @@ fn main() {
         let id = Ulid::new();
         println!("{}", id);
 
+        // If multiple ULIDs are created, insert an INTERVAL between them.
         if i < count - 1 {
             thread::sleep(Duration::from_millis(args.interval));
         }
