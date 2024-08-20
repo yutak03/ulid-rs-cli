@@ -8,13 +8,13 @@ use ulid::Ulid;
 struct Args {
     /// Number of ULIDs to generate
     /// If 0 is provided, 1 ULID will be generated
-    #[arg(short, long, default_value_t = 1)]
+    #[arg(short = 'C', long, default_value_t = 1)]
     count: u32,
 
     /// Number of interval generating ULID
     /// Unit is milliseconds
     /// If 0 is provided, interval will be 100 milliseconds.
-    #[arg(short, long, default_value_t = 100)]
+    #[arg(short = 'I', long, default_value_t = 100)]
     interval: u64
 }
 
@@ -49,7 +49,7 @@ mod tests {
     /// Test to set custom value by args
     #[test]
     fn test_args_custom_values() {
-        let args = Args::parse_from(&["test", "-c", "5", "-i", "200"]);
+        let args = Args::parse_from(&["test", "-C", "5", "-I", "200"]);
         assert_eq!(args.count, 5);
         assert_eq!(args.interval, 200);
     }
