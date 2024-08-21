@@ -15,7 +15,11 @@ struct Args {
     /// Unit is milliseconds
     /// If 0 is provided, interval will be 100 milliseconds.
     #[arg(short = 'I', long, default_value_t = 100)]
-    interval: u64
+    interval: u64,
+
+    /// If true, generate nil ULID
+    #[arg(short = 'N', long = "nil", default_value_t = false)]
+    nil: bool,
 }
 
 fn main() {
@@ -23,7 +27,7 @@ fn main() {
     let count = if args.count == 0 { 1 } else { args.count };
 
     for i in 0..count {
-        let id = Ulid::new();
+        let id = if args.nil { Ulid::nil() } else { Ulid::new() };
         println!("{}", id);
 
         // If multiple ULIDs are created, insert an INTERVAL between them.
@@ -58,7 +62,7 @@ mod tests {
     /// Tests the basic functionality of ULID generation and intervals between generations
     #[test]
     fn test_ulid_generation() {
-        let args = Args { count: 3, interval: 50 };
+        let args = Args { count: 3, interval: 50, nil: false };
         let start = Instant::now();
 
         // Capture stdout
