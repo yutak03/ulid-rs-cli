@@ -26,15 +26,18 @@ fn main() {
     let args = Args::parse();
     let count = if args.count == 0 { 1 } else { args.count };
 
+    println!("Generated ULIDs:");
+    println!("{}", "─".to_string().repeat(50));
     for i in 0..count {
         let id = if args.nil { Ulid::nil() } else { Ulid::new() };
-        println!("{}", id);
+        println!(" {}) {}", i+1, id);
 
         // If multiple ULIDs are created, insert an INTERVAL between them.
         if i < count - 1 {
             thread::sleep(Duration::from_millis(args.interval));
         }
     }
+    println!("{}", "─".to_string().repeat(50));
 }
 
 #[cfg(test)]
