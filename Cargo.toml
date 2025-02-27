@@ -2,6 +2,14 @@
 name = "ulid-generator-rs"
 version = "0.1.0"
 edition = "2021"
+authors = ["Yutak <yutak03.dev@gmail.com>"]
+description = "ULID Generator Command Line Tool"
+license = "MIT"
+repository = "https://github.com/yutak03/ulid-generator-rs"
+
+[[bin]]
+name = "ulid"
+path = "src/main.rs"
 
 [dependencies]
 clap = { version = "4.3", features = ["derive"] }
