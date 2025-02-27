@@ -1,0 +1,64 @@
+[env]
+# プロジェクト名をCargo.tomlから取得
+PROJECT_NAME = { script = ["grep '^name' Cargo.toml | sed -e 's/.*= \"\\(.*\\)\"/\\1/'"] }
+# インストール先ディレクトリ
+INSTALL_DIR = "/usr/local/bin"
+# ビルドバイナリパス
+BINARY_PATH = "target/release/${PROJECT_NAME}"
+# バイナリ名
+BINARY_NAME = "ulid"
+
+[tasks.default]
+description = "Default task - runs build and install"
+dependencies = ["build", "install"]
+
+[tasks.build]
+description = "Build the release binary"
+command = "cargo"
+args = ["build", "--release"]
+
+[tasks.install]
+description = "Install the binary to the system"
+dependencies = ["build"]
+script = [
+  "echo Installing ${PROJECT_NAME} to ${INSTALL_DIR}",
+  "sudo install -m 755 ${BINARY_PATH} ${INSTALL_DIR}/${PROJECT_NAME}",
+  "sudo ln -sf ${INSTALL_DIR}/${PROJECT_NAME} ${INSTALL_DIR}/${BINARY_NAME}"
+]
+
+[tasks.uninstall]
+description = "Uninstall the binary from the system"
+script = [
+  "echo Uninstalling ${PROJECT_NAME} from ${INSTALL_DIR}",
+  "sudo rm -f ${INSTALL_DIR}/${PROJECT_NAME}",
+  "sudo rm -f ${INSTALL_DIR}/${BINARY_NAME}"
+]
+
+[tasks.clean]
+description = "Clean build artifacts"
+command = "cargo"
+args = ["clean"]
+script_runner = "@duckscript"
+script = [
+  "echo Cleaned build artifacts"
+]
+
+[tasks.test]
+description = "Run tests"
+command = "cargo"
+args = ["test"]
+
+[tasks.doc]
+description = "Generate documentation"
+command = "cargo"
+args = ["doc", "--no-deps"]
+
+[tasks.check]
+description = "Check code for errors without building"
+command = "cargo"
+args = ["check"]
+
+[tasks.clippy]
+description = "Run Clippy for linting"
+command = "cargo"
+args = ["clippy", "--all-targets", "--all-features", "--", "-D", "warnings"]
