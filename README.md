@@ -1,4 +1,4 @@
-# ULID Generator for Rust
+# ulid-rs CLI
 
 ![License: MIT](https://img.shields.io/badge/License-MIT-blue.svg)
 
