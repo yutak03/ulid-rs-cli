@@ -23,7 +23,7 @@ cargo install --git https://github.com/yutak03/ulid-generator-rs.git
 
 ```bash
 git clone https://github.com/yutak03/ulid-generator-rs.git
-cd ulid-generator-rs
+cd ulid-rs-cli
 ```
 
 2. Build and install
