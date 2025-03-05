@@ -14,7 +14,7 @@ The ULID generation itself uses the [ulid](https://crates.io/crates/ulid) crate.
 ### Using Cargo
 
 ```bash
-cargo install --git https://github.com/yutak03/ulid-generator-rs.git
+cargo install --git https://github.com/yutak03/ulid-rs-cli.git
 ```
 
 ### Build from Source
