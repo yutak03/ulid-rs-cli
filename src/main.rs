@@ -32,22 +32,17 @@ fn generate_ulid(nil: bool) -> Ulid {
     }
 }
 
-/// Print a formatted list of ULIDs
+/// Print ULIDs to stdout
 fn print_ulids(count: u32, interval: u64, nil: bool) {
-    println!("Generated ULIDs:");
-    println!("{}", "─".repeat(50));
-
     for i in 0..count {
         let id = generate_ulid(nil);
-        println!(" {}) {}", i + 1, id);
+        println!("{}", id);
 
         // If multiple ULIDs are created, insert an interval between them.
         if i < count - 1 {
             thread::sleep(Duration::from_millis(interval));
         }
     }
-
-    println!("{}", "─".repeat(50));
 }
 
 fn main() {
@@ -66,19 +61,19 @@ mod tests {
     /// Test for default argument values
     #[test]
     fn test_args_default_values() {
-        let args = Args::parse_from(&["test"]);
+        let args = Args::parse_from(["test"]);
         assert_eq!(args.count, 1);
         assert_eq!(args.interval, 100);
-        assert_eq!(args.nil, false);
+        assert!(!args.nil);
     }
 
     /// Test for custom argument values
     #[test]
     fn test_args_custom_values() {
-        let args = Args::parse_from(&["test", "-C", "5", "-I", "200", "-N"]);
+        let args = Args::parse_from(["test", "-C", "5", "-I", "200", "-N"]);
         assert_eq!(args.count, 5);
         assert_eq!(args.interval, 200);
-        assert_eq!(args.nil, true);
+        assert!(args.nil);
     }
 
     /// Test ULID generation functions
